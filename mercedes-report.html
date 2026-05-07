@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign Architect · VIP Reading</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+  :root {
+    --ivory: #F5F0EA;
+    --navy: #203A4D;
+    --gold: #A68E45;
+    --gold-light: #c9aa5a;
+    --cream: #EDE8E0;
+    --text: #2a2a2a;
+    --muted: #6b6b6b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy);
+    color: var(--ivory);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 64px 24px 48px;
+    background: linear-gradient(180deg, #142636 0%, var(--navy) 100%);
+    border-bottom: 1px solid rgba(166,142,69,0.3);
+    position: relative;
+  }
+  .stars { letter-spacing: 12px; color: var(--gold); font-size: 18px; margin-bottom: 28px; display: block; }
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 7vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ivory);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(17px, 3vw, 22px);
+    color: var(--gold-light);
+    margin-bottom: 10px;
+  }
+  .hero-brand {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,240,234,0.45);
+    margin-top: 20px;
+  }
+  .gold-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 28px auto;
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    background: #142636;
+    border-bottom: 1px solid rgba(166,142,69,0.25);
+    overflow-x: auto;
+    display: flex;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    color: rgba(245,240,234,0.5);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* PANELS */
+  .panel { display: none; max-width: 780px; margin: 0 auto; padding: 56px 28px 80px; }
+  .panel.active { display: block; }
+
+  /* TYPOGRAPHY */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ivory);
+    margin-bottom: 32px;
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 400;
+    color: var(--gold-light);
+    margin: 44px 0 14px;
+  }
+  h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,240,234,0.6);
+    margin: 30px 0 10px;
+  }
+  p {
+    font-size: clamp(15px, 2vw, 17px);
+    line-height: 1.85;
+    color: rgba(245,240,234,0.88);
+    margin-bottom: 20px;
+  }
+  .pull-quote {
+    border-left: 2px solid var(--gold);
+    padding: 6px 24px;
+    margin: 32px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(19px, 3vw, 26px);
+    line-height: 1.5;
+    color: var(--gold-light);
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(166,142,69,0.2);
+    margin: 44px 0;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(166,142,69,0.2);
+    border-radius: 4px;
+    padding: 26px 22px;
+  }
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--ivory);
+    margin-bottom: 10px;
+  }
+  .card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(245,240,234,0.7);
+    margin: 0;
+  }
+
+  /* SYNTHESIS LIST */
+  .synthesis-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 28px;
+    align-items: flex-start;
+  }
+  .synth-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: rgba(166,142,69,0.35);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+  }
+  .synth-content strong {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .synth-content p { margin: 0; font-size: 15px; }
+
+  /* CLOSING */
+  .closing-block {
+    text-align: center;
+    padding: 48px 20px;
+  }
+  .model-contrast {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 36px 0;
+    border: 1px solid rgba(166,142,69,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .model-old, .model-new {
+    padding: 28px 22px;
+  }
+  .model-old { background: rgba(255,255,255,0.03); }
+  .model-new { background: rgba(166,142,69,0.08); }
+  .model-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .model-old .model-label { color: rgba(245,240,234,0.4); }
+  .model-new .model-label { color: var(--gold); }
+  .model-item {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(245,240,234,0.75);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(166,142,69,0.1);
+  }
+  .model-item:last-child { border-bottom: none; }
+  .final-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(22px, 4vw, 34px);
+    color: var(--ivory);
+    line-height: 1.4;
+    margin: 40px auto;
+    max-width: 600px;
+  }
+
+  @media (max-width: 520px) {
+    .model-contrast { grid-template-columns: 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="stars">✦ ✦ ✦</span>
+  <p class="hero-eyebrow">Your CEO Astroportrait</p>
+  <h1 class="hero-title">The Sovereign Architect</h1>
+  <p class="hero-subtitle">A VIP Reading</p>
+  <div class="gold-rule"></div>
+  <p class="hero-brand">Cozy Astro · The Cozy Cosmic Company</p>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="show('opening')">Opening</button>
+  <button class="tab-btn" onclick="show('personality')">Personality</button>
+  <button class="tab-btn" onclick="show('business')">Business Portrait</button>
+  <button class="tab-btn" onclick="show('karmic')">Karmic Points</button>
+  <button class="tab-btn" onclick="show('ceo')">CEO Portrait</button>
+  <button class="tab-btn" onclick="show('abundance')">Abundance Architecture</button>
+  <button class="tab-btn" onclick="show('closing')">In Closing</button>
+</nav>
+
+<!-- OPENING -->
+<div id="opening" class="panel active">
+  <p class="section-label">Opening</p>
+  <h2 class="section-title">A Chart That <em>Commands the Room</em></h2>
+  <p>There are charts that whisper, and there are charts that command the room before the door is even opened. Yours is the second kind, but with an unexpected refinement: the command is laced with grace, and the grace is sharpened by intelligence. You are not here to play small, and you are not here to play loud. You are here to play masterfully.</p>
+  <p>What I see in your chart is the signature of a soul that has been doing this work for a very long time. You arrived in this lifetime already carrying the weight of leadership, already familiar with the burden of being the one who decides. You did not have to learn to be responsible. You had to learn that you were allowed to be light.</p>
+  <div class="pull-quote">This is the thread we will pull throughout this reading.</div>
+</div>
+
+<!-- PERSONALITY -->
+<div id="personality" class="panel">
+  <p class="section-label">Part One</p>
+  <h2 class="section-title">Personality: <em>The Radiant Strategist</em></h2>
+  <p>Your character is shaped by a powerful and productive tension between a Leo Rising (the Queen) and a Libra Sun (the Diplomat), with an Aries Moon running underneath the whole thing like a second engine. Three forces, three rhythms, one woman.</p>
+
+  <h3>Your Character</h3>
+  <p>You possess a natural, regal authority. Mars in Leo in your 1st House means you don't simply enter a room; you change its temperature. There is a physical courage in you, a willingness to be seen, that most people only dream of having. People sense, within seconds of meeting you, that you have chosen yourself. This is rare and it is magnetic.</p>
+  <p>But your Sun, Jupiter, Saturn, and Pluto all clustered together in Libra mean your ego is anchored not in domination but in fairness, justice, and intellectual mastery. You are a velvet glove over an iron fist. You win not by overwhelming people but by being the most prepared, the most precise, the most strategically positioned person in the room.</p>
+  <p>This combination is extraordinarily rare. Most leaders are either warm and soft, or sharp and cold. You are warm and sharp at once. This is your signature, and it is the reason your clients feel both safe and stretched in your presence.</p>
+
+  <div class="divider"></div>
+
+  <h3>Your Way of Acting</h3>
+  <p>You act with deliberation. Mercury Retrograde in Scorpio means you do not speak just to fill space, and you do not make decisions just to feel productive. You observe. You poke for weaknesses. You wait for the texture of a situation to reveal itself. And then, when you have seen what others have not yet seen, you deliver a calculated response that lands exactly where you intended.</p>
+  <p>This is the mind of a natural detective. You are wired for what is hidden, what is unsaid, what is operating beneath the surface narrative. In business, this translates into an almost unfair advantage: you read between the lines of every email, every contract, every conversation. You know what people mean before they finish saying it.</p>
+  <p>The shadow of this gift is overthinking. Mercury Retrograde in Scorpio can also become a closed loop, where you analyze the same situation from twelve angles before acting. The medicine is to trust your first read more often. Your instincts are sharper than your deliberations.</p>
+
+  <div class="divider"></div>
+
+  <h3>Your Sensibility</h3>
+  <p>Your Moon in Aries gives you an internal warrior spirit that lives beneath the diplomatic surface. While the world sees calm composure, your emotional life is fast, impulsive, and competitive. You feel things in flashes. You know within seconds whether you trust someone. You have a low tolerance for incompetence and a very high need for autonomy.</p>
+  <p>This is the part of you that says, just let me decide and move. This is the part that gets exhausted by committees, by chronic consultation, by being asked to explain decisions you already know are right.</p>
+  <p>Most of your fatigue as a CEO comes from the split between your Libra surface and your Aries core. The Libra in you wants to find consensus and harmony. The Aries in you wants to act now and adjust later. Both are real, both are valid, and they need different domains.</p>
+  <div class="pull-quote">The integration is not to choose one over the other. It is to design your business so that both have territory.</div>
+  <p>Your Libra leads partnerships, communication, and external strategy. Your Aries leads the decisions that should not require anyone else's input. Protecting that Aries decision zone is non-negotiable for your nervous system.</p>
+</div>
+
+<!-- BUSINESS PORTRAIT -->
+<div id="business" class="panel">
+  <p class="section-label">Part Two</p>
+  <h2 class="section-title">Business Portrait: <em>The Architect of Influence</em></h2>
+
+  <h3>Your Zone of Genius</h3>
+  <h4>Strategic Communication and Negotiation</h4>
+  <p>With Sun, Jupiter, Saturn, and Pluto all stacked together in your 3rd House, you are operating with a concentration of communication intelligence that is genuinely rare. The 3rd House is the house of the mind, of language, of the immediate exchange between thinkers. To have four major planets there, including the Sun itself, is to be designed as a thought architect.</p>
+  <p>You do not just communicate well. You synthesize complex information at speed, find the unifying frame nobody else has found, and then deliver it with a precision that changes what the listener thought was possible. You excel anywhere that intelligence-as-leverage matters: media, technology, law, high-end consulting, education at the strategic level. Your gift is not content. Your gift is thought.</p>
+
+  <div class="divider"></div>
+
+  <h3>Your Strengths</h3>
+  <div class="card-grid">
+    <div class="card">
+      <p class="card-label">Strength 01</p>
+      <p class="card-title">Authoritative Presence</p>
+      <p>People trust you to lead within minutes of meeting you. Leo Rising plus Mars in the 1st creates natural sovereignty that does not need to be performed. You walk in and the room reorganizes itself around you. This is one of your most monetizable assets.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Strength 02</p>
+      <p class="card-title">Intellectual Stamina</p>
+      <p>Your Libra stellium, fed by Jupiter's expansiveness and Saturn's discipline, gives you the ability to hold complex strategic problems for extended periods without collapsing into simplification. You can sit with nuance. You can wait for the elegant solution.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">Strength 03</p>
+      <p class="card-title">The Great Connector</p>
+      <p>Jupiter in Libra means partnerships expand you, and you expand them. You have an unusual ability to make the right introductions, broker the right collaborations, and build the right alliances. Your network is a strategic asset.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>Your Growth Areas for Income</h3>
+  <p>To access the level of income that matches your actual capacity, you must do the inner work around Chiron in Taurus in your 10th House. This is the most important wound to understand in your chart, because it sits exactly at the crossroads of worth and visibility.</p>
+  <p>There is a deep-seated wound around material value and stability. Somewhere early, you absorbed the message that worth is something to be earned through visible achievement, rather than something you possess simply by existing. The wound shows up in the professional sphere because the 10th House governs your public role and your career arc. So every time you stand at the edge of charging more, raising your rates, claiming a bigger stage, this old voice says: you have not yet done enough to deserve it.</p>
+  <p>This is why you over-deliver. This is why you work harder than your offers require. This is why, even after you raise your prices, you feel a quiet need to justify them.</p>
+  <div class="pull-quote">The fix is not to charge more, though you will. The fix is to charge from a place of received worth rather than performed worth. Your worth is not the output of your work. It precedes the work.</div>
+  <p>In practical terms: your 2nd House in Virgo is asking for meticulous financial systems, clean numbers, refined offer architecture. Build them. But do not let the precision of your spreadsheets become another way to prove you deserve to be paid. Stay focused on the larger contracts, the longer arcs, the legacy structures. You are not a small-numbers operator. You are a building-an-empire operator who happens to be excellent with details.</p>
+</div>
+
+<!-- KARMIC -->
+<div id="karmic" class="panel">
+  <p class="section-label">Part Three</p>
+  <h2 class="section-title">Karmic & <em>Past Life Points</em></h2>
+
+  <h3>South Node in Capricorn</h3>
+  <h4>What You Already Mastered</h4>
+  <p>You have been here before, in the seat of authority. Your soul carries the deep memory of building structures, governing organizations, carrying titles, managing institutions. Your inner archives know how to be efficient, hierarchical, disciplined, and emotionally contained under pressure.</p>
+  <p>This is why business comes to you with a strange ease in certain areas. You are not learning these skills. You are remembering them.</p>
+  <p>But the South Node is also the comfort trap. It is the pattern your soul knows so well that it becomes the default response to every challenge, even when the challenge is asking for something entirely different. For you, the trap is to retreat into control, productivity, professional armor, and emotional containment every time something genuinely new is asked of you. To prove yourself again. To handle it alone. To put on the executive face when what is actually needed is softness.</p>
+
+  <div class="divider"></div>
+
+  <h3>North Node in Cancer, 12th House</h3>
+  <h4>Where Your Soul Is Going</h4>
+  <p>This is the most tender and most important part of your chart for the years ahead.</p>
+  <p>Your North Node in Cancer in the 12th House is asking you to build a private inner life that nourishes you regardless of professional outcome. It is asking you to develop receptivity, intuition, emotional fluency, and the capacity to be held rather than only the capacity to hold others. It is asking you to honor the unseen, the contemplative, the sacred, the deeply personal.</p>
+  <div class="pull-quote">Your next level of income will not come from working harder. It will come from working from a more nourished, more rested, more inwardly anchored place.</div>
+  <p>This is the opposite of the strategy that got you to where you are. Every time you choose to systematize, automate, or hire for something that drains your inner waters, you are voting for your evolutionary path. Every time you say I'll just do it myself, you are voting for the comfortable past.</p>
+
+  <div class="divider"></div>
+
+  <h3>The Saturn-Sun-Jupiter Conjunction</h3>
+  <h4>The Old Soul Signature</h4>
+  <p>The clustering of Saturn, Sun, and Jupiter in your 3rd House is what I would call an old contract. You likely carried heavy responsibilities from a very young age. You may have been the capable child, the responsible one, the small adult in the family system. You may have learned that love was something earned through performance, achievement, or being useful.</p>
+  <p>This is Old Soul energy. You have already been a leader in past lives. In this one, the work is not to prove your authority again. It is to lead with balance rather than just force, with grace rather than just discipline, with receptivity rather than just control.</p>
+  <p>The Saturn-Pluto contact on your Sun also speaks to a lineage of strong personalities, possibly hidden dynamics, possibly a family pattern of intense or overwhelming presences. You are not afraid of intensity. You are not afraid of the dark. You can sit with what others cannot sit with. This is precisely why your clients trust you with their real material.</p>
+  <p>The shadow of this is control, suspicion, the impulse to test loyalty. The medicine is choosing transparency as a discipline.</p>
+</div>
+
+<!-- CEO PORTRAIT -->
+<div id="ceo" class="panel">
+  <p class="section-label">Part Four</p>
+  <h2 class="section-title">The CEO Portrait: <em>The Sovereign System</em></h2>
+  <p>Here is the technical breakdown of your leadership architecture — the structural map of how you actually operate as a CEO.</p>
+
+  <div class="card-grid" style="grid-template-columns:1fr 1fr; margin-top: 36px;">
+    <div class="card" style="grid-column: span 2;">
+      <p class="card-label">The OS — Operating System</p>
+      <p class="card-title">Moon in Aries</p>
+      <p>Your internal processing is high-speed and reactive. Your operating system is built for search-and-strike. It is an entrepreneurial engine that thrives on challenges, quick decisions, and being first to market. It keeps your company moving at a pace most competitors cannot match.</p>
+      <p style="margin-top:12px;">This OS is your secret weapon and your nervous-system risk. It works brilliantly when you have decision zones where you do not need to consult. It crashes when you are forced to operate inside chronic group consensus or slow approval processes. Design accordingly. Build your business so your Aries Moon has clean, sovereign territory.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">The UI — User Interface</p>
+      <p class="card-title">Leo Rising</p>
+      <p>The world meets a luminous, charismatic, and bold leader. Your interface is designed to inspire. Your face is the brand. Your voice is the brand. Underuse this and you leak revenue. The balance is theatrical presence in chosen moments, deep privacy outside of them.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">The Core — Processor</p>
+      <p class="card-title">Sun in Libra</p>
+      <p>The actual logic of your leadership is harmony and strategy. Your Libra Core wants to win through alliance. You are willing to lose a small battle to win a strategic war. This Core is what makes you a strategist rather than just a high performer. Trust it.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">The Domain — Market</p>
+      <p class="card-title">Midheaven in Taurus</p>
+      <p>Your company's territory is the material and tangible. You are meant to build something that lasts. You are building an empire of stone, and stone takes time. Resist the pressure to chase faster business models. Your Midheaven in Taurus rewards patience the way compound interest rewards time.</p>
+    </div>
+    <div class="card">
+      <p class="card-label">The Money Motors — Revenue</p>
+      <p class="card-title">Two Distinct Engines</p>
+      <p><strong style="color:var(--gold);font-size:11px;letter-spacing:1px;">Motor A · 2nd House Virgo</strong> — Daily cash flow through precision. Reliable, steady, improves with iteration. <br><br><strong style="color:var(--gold);font-size:11px;letter-spacing:1px;">Motor B · Venus in Sagittarius, 4th House</strong> — Big wealth through vision and roots. This is the engine that scales.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote">The strategic insight: do not confuse the two motors. Motor A keeps the business alive. Motor B is what makes you wealthy.</div>
+  <p>Many entrepreneurs with this configuration spend their lives optimizing Motor A and never seriously activate Motor B. Do not be one of them.</p>
+</div>
+
+<!-- ABUNDANCE -->
+<div id="abundance" class="panel">
+  <p class="section-label">Part Five</p>
+  <h2 class="section-title">The Abundance Architecture: <em>How Wealth Actually Arrives</em></h2>
+  <p>Most charts have one or two clear wealth signatures. Yours has five, and they reinforce each other in a way I rarely see. You are not built for ordinary income. You are built for intellectual property income, leveraged income, and quantum-leap income.</p>
+
+  <div class="divider"></div>
+
+  <h3>1. The Super-Stellium in the 3rd House</h3>
+  <h4>Your Intellectual Empire</h4>
+  <p>You have four major planets clustered together in Libra in your 3rd House: Sun at 19°35', Jupiter at 20°29', Saturn at 13°40', and Pluto at 24°04'. The Sun-Jupiter conjunction is exact within one degree. This is not a scattered cluster. This is a concentrated wealth machine, and the fact that the aspects are mostly applying means this signature gets more powerful with time, not less.</p>
+  <p>In financial astrology, the Jupiter-Pluto conjunction is sometimes called the millionaire aspect. It marks a soul that can see massive financial potential in information and ideas that other people walk past every day.</p>
+  <div class="pull-quote">Stop pricing your time. Start pricing your thinking. The same hour of yours, sold as consulting at €500, could be sold as licensed methodology at €5,000, or embedded in a program at €25,000, or written into a book that earns for ten years.</div>
+
+  <div class="divider"></div>
+
+  <h3>2. Mercury in Scorpio Retrograde, Conjunct Pluto</h3>
+  <h4>The Strategist Who Sees Through Walls</h4>
+  <p>Your Mercury sits at 1°00' Scorpio, retrograde, conjunct Pluto. This placement is the signature of someone who can see exactly where a business, a deal, a person, or an industry is bleeding value. You are wired to detect leakage that others cannot see. You may have spent years assuming everyone else sees it too. They do not.</p>
+  <p>This perception is monetizable in three specific directions. High-stakes diagnostics, where complex situations can command €5,000 to €25,000 per engagement once positioned correctly. Discretion as a service, where your ability to hold a confidence makes you the trusted advisor in the room when nobody else is allowed in. And written intellectual property of unusual depth — not high-frequency content, but low-frequency, high-depth, signature thought pieces that establish you as the definitive mind on a given question.</p>
+  <p>The Mercury-MC opposition, exact within 4 minutes, means your career arc is structurally built around the exposure of what you know. You will never be the bland thought leader. You will be the one who says what others are afraid to say, framed in a way that is impossible to dismiss.</p>
+
+  <div class="divider"></div>
+
+  <h3>3. The Mars-Uranus Square</h3>
+  <h4>The Quantum Leap Pattern</h4>
+  <p>Mars in Leo at 25°14' squares Uranus in Scorpio at 28°00'. Most people build wealth through linear accumulation. This is not your pattern. Your chart produces wealth through quantum leaps — sudden moves, disruptive pivots, decisions that look reckless from the outside and turn out to triple or quintuple income overnight.</p>
+  <p>The shadow is self-sabotage at the threshold of success. The pattern: you build something for years. You are about to cash in. Something inside you panics at becoming the establishment, and you blow it up. You walk away from the deal that would have made you rich because becoming successful in that form felt like a betrayal of your inner rebel.</p>
+  <div class="pull-quote">Do not blow up the table. Build the next table while the current one is still paying.</div>
+  <p>The Mars-Pluto sextile is your stabilizer. It gives you strategic restraint — the ability to feel the disruptive urge and time it correctly rather than acting on it the moment it arrives. Your Mars-Uranus only knows that it wants to. Your Mars-Pluto knows when to move.</p>
+
+  <div class="divider"></div>
+
+  <h3>4. Chiron in Taurus in the 10th</h3>
+  <h4>The Wound That Becomes the Vault</h4>
+  <p>Your Chiron sits at 21°50' Taurus, retrograde, in your 10th House. This is the single most important thing to address to access the income your chart was built for. This is the I will never feel safe enough to charge what I am worth wound.</p>
+  <p>Chiron in Taurus does not heal through affirmations or mindset work alone. It heals through embodied luxury. Taurus is the sign of the senses. The wound is in the senses, so the medicine must enter through the senses. Your office, your wardrobe, your physical surroundings must visibly and tangibly reflect the level of wealth you want to attract, before the income arrives. Not as performative consumption. As somatic recoding.</p>
+  <p>Practically: invest in three things this year that signal Taurus-level luxury to your own nervous system. A workspace that feels like an executive's. Wardrobe pieces that belong on the Cozy Cosmic CEO. One sensory ritual that consistently signals to your body: I am already her.</p>
+  <div class="pull-quote">This is not vanity. This is the somatic technology your chart specifically requires.</div>
+
+  <div class="divider"></div>
+
+  <h3>5. The 2nd–8th House Axis</h3>
+  <h4>The Two Wealth Streams</h4>
+  <p><strong style="color:var(--gold-light);">The Virgo 2nd House: precision wealth.</strong> Your earned income responds to systems, refinement, attention to detail, and excellent execution. The risk is that it never launches. The medicine is to launch at 80% and refine in motion.</p>
+  <p><strong style="color:var(--gold-light);">The Pisces 8th House: visionary wealth.</strong> This is where your real wealth lives — investments, partnerships, joint ventures, royalties, intellectual property that travels far while you stay grounded at home. Pisces here means your access to this wealth is intuitive, almost psychic. You can feel where money is about to flow before the data confirms it.</p>
+  <p>Your Virgo 2nd analyzes the data. Your Pisces 8th feels the current. When you let them work together, you get intuition grounded in numbers. You will sense the right deal. You will verify it with rigorous due diligence. You will move when both your gut and your spreadsheet agree. This is how serious wealth is built.</p>
+
+  <div class="divider"></div>
+
+  <h3>6. The Part of Fortune in Aquarius in the 7th</h3>
+  <h4>Where Luck Actually Lives</h4>
+  <p>The Part of Fortune marks where ease, flow, and good fortune naturally meet you. Yours sits at 24°18' Aquarius in your 7th House. This placement is unambiguous: your luck flows through partnerships, alliances, and unconventional collaborations.</p>
+  <p>Fortune trine Sun. Fortune trine Mercury. Fortune trine Jupiter. Fortune trine Pluto — almost exact, at 0°13'. Fortune sextile Neptune. This is a remarkable concentration of supportive aspects. When you partner well, almost everything in your chart amplifies you. When you try to do it alone, you are working against your own design.</p>
+  <div class="pull-quote">Heal Chiron, and Fortune opens.</div>
+
+  <div class="divider"></div>
+
+  <h3>Synthesis: The Abundance Roadmap</h3>
+  <div class="synthesis-item"><div class="synth-num">01</div><div class="synth-content"><strong>You do not climb. You leap.</strong><p>Your Mars-Uranus square is built for sudden, disruptive financial breakthroughs. Plan for this. Save aggressively between leaps. When the leap moment arrives, do not flinch.</p></div></div>
+  <div class="synthesis-item"><div class="synth-num">02</div><div class="synth-content"><strong>You do not sell hours. You license thinking.</strong><p>Your 3rd House stellium is too dense to be priced hourly. Move toward methodologies, frameworks, intellectual property, books, licensed systems, royalty structures.</p></div></div>
+  <div class="synthesis-item"><div class="synth-num">03</div><div class="synth-content"><strong>You do not work alone. You compound through partnership.</strong><p>Your Part of Fortune makes this unambiguous. The wealthiest version of you is in a strategic alliance. The solo entrepreneur path is the slow path for your chart.</p></div></div>
+  <div class="synthesis-item"><div class="synth-num">04</div><div class="synth-content"><strong>You do not save your way to wealth. You signal your way to it.</strong><p>Chiron in Taurus heals through embodied luxury. The income follows the somatic recoding, not the other way around.</p></div></div>
+  <div class="synthesis-item"><div class="synth-num">05</div><div class="synth-content"><strong>You do not hide your depth. You charge for it.</strong><p>Mercury in Scorpio retrograde conjunct Pluto is your most penetrating asset. Stop offering it for free, casually, in conversation, in sample calls. Price it.</p></div></div>
+  <div class="synthesis-item"><div class="synth-num">06</div><div class="synth-content"><strong>You do not separate intuition from data. You marry them.</strong><p>Build the spreadsheet. Trust the gut. Move when they agree.</p></div></div>
+</div>
+
+<!-- CLOSING -->
+<div id="closing" class="panel">
+  <p class="section-label">In Closing</p>
+  <h2 class="section-title">Executive <em>Summary</em></h2>
+
+  <p>You are a Sovereign Architect. Your work in this lifetime is not to become a leader. You already are one. You have always been one. Your chart confirms it across multiple lifetimes and your daily life confirms it across every room you enter.</p>
+  <p>Your work is to lead from a fundamentally different place than the place authority has traditionally come from in your line.</p>
+
+  <div class="model-contrast">
+    <div class="model-old">
+      <p class="model-label">The Old Model</p>
+      <div class="model-item">Lead through control</div>
+      <div class="model-item">Lead through performance</div>
+      <div class="model-item">Relentless proof of worth</div>
+    </div>
+    <div class="model-new">
+      <p class="model-label">The New Model</p>
+      <div class="model-item">Lead through chosen alliances</div>
+      <div class="model-item">Lead through refined expression</div>
+      <div class="model-item">Deep strategic intelligence</div>
+      <div class="model-item">A private inner life no achievement can shake</div>
+    </div>
+  </div>
+
+  <p>Your gifts are nearly intimidating in their density. You hold strategic mind, charismatic presence, warrior decisiveness, diplomatic skill, intellectual stamina, and the rare ability to face complexity without flinching. Few leaders carry this combination. Almost none carry it consciously.</p>
+  <p>Your invitation is gentler than your gifts. You are being asked to trust that your worth is given, not earned. To build a business that nourishes your inner waters rather than draining them. To say less and mean more. To rest as a leadership practice. To choose alliances that meet your depth, and to release the ones that do not.</p>
+
+  <div class="closing-block">
+    <div class="gold-rule" style="width:40px; margin: 0 auto 32px;"></div>
+    <p style="font-size:13px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,234,0.4); margin-bottom:24px;">The question your chart keeps asking you, in every season:</p>
+    <p class="final-question">"What would you build if you already knew you were enough?"</p>
+    <div class="gold-rule" style="width:40px; margin: 32px auto 24px;"></div>
+    <span class="stars">✦ ✦ ✦</span>
+    <p style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:rgba(245,240,234,0.3); margin-top:24px;">Cozy Astro · VIP Reading</p>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = ['opening','personality','business','karmic','ceo','abundance','closing'];
+  document.querySelectorAll('.tab-btn')[tabs.indexOf(id)].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
